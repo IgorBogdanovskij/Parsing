@@ -1,0 +1,2 @@
+rootProject.name = "ParsingFilm"
+include ':app'
