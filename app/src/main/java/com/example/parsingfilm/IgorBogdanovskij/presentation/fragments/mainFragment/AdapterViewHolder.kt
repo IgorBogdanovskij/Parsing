@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.parsingfilm.IgorBogdanovskij.data.dataBase.DateNews
 import com.example.parsingfilm.IgorBogdanovskij.data.models.News
 import com.example.parsingfilm.R
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class Adapter_ViewHolder():RecyclerView.Adapter<Adapter_ViewHolder.Vh>() {
+ class AdapterViewHolder(val callback:CallBack):RecyclerView.Adapter<AdapterViewHolder.Vh>() {
 
-   var listNews = mutableListOf<News>()
-  //private var dataNews = DateNews()
+   interface CallBack{
+       fun onClick(new:News)
+   }
 
+    var mListNews = mutableListOf<News>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
       val view = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
@@ -28,36 +28,40 @@ class Adapter_ViewHolder():RecyclerView.Adapter<Adapter_ViewHolder.Vh>() {
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("my", "onViewCreated NEws: ${listNews.size}")
-        //Log.d("my", "onViewCreated NEws: ${dataNews.listNews.size}")
-      val news = listNews[position]
+        Log.d("my", "onViewCreated NEws: ${mListNews.size}")
+      val news = mListNews[position]
       holder.bindView(news)
     }
 
     override fun getItemCount(): Int {
-        return listNews.size
+        return mListNews.size
     }
 
   fun setList(list:MutableList<News>){
-    listNews.clear()
-    listNews.addAll(list)
+    mListNews.clear()
+    mListNews.addAll(list)
     notifyDataSetChanged()
   }
 
-    class Vh(private val view: View):RecyclerView.ViewHolder(view) {
+    inner class Vh(private val view: View):RecyclerView.ViewHolder(view) {
       lateinit var mImage:ImageView
-      lateinit var mDescription:TextView
+      lateinit var mTitle:TextView
       lateinit var mDate:TextView
 
       init {
           mImage = view.findViewById(R.id.Image)
-          mDescription = view.findViewById(R.id.Description)
+          mTitle = view.findViewById(R.id.TitleItem)
           mDate = view.findViewById(R.id.dateNews)
+
+          view.setOnClickListener {
+              Log.d("my", "click: $adapterPosition")
+              callback.onClick(mListNews[adapterPosition])
+          }
         }
 
       fun bindView(news: News ){
           GlobalScope.launch(Dispatchers.Main) {
-              mDescription.text = news.description
+              mTitle.text = news.title
               Picasso.with(view.context)
                   .load(news.image)
                   .into(mImage)

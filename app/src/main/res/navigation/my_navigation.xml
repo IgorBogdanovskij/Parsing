@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_navigation"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.parsingfilm.IgorBogdanovskij.presentation.fragments.mainFragment.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_viewNewsFragment"
+            app:destination="@id/viewNewsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_wishFragment"
+            app:destination="@id/wishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewNewsFragment"
+        android:name="com.example.parsingfilm.IgorBogdanovskij.presentation.fragments.viewNewsFragment.NewsFragment"
+        android:label="ViewNewsFragment"
+        tools:layout="@layout/view_news_fragment">
+        <argument
+            android:name="oneNews"
+            app:argType="com.example.parsingfilm.IgorBogdanovskij.data.models.News" />
+        <action
+            android:id="@+id/action_viewNewsFragment_to_mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wishFragment"
+        android:name="com.example.parsingfilm.IgorBogdanovskij.presentation.fragments.wishFragment.WishFragment"
+        android:label="WishFragment"
+        tools:layout="@layout/wish_layout">
+        <action
+            android:id="@+id/action_wishFragment_to_mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+</navigation>

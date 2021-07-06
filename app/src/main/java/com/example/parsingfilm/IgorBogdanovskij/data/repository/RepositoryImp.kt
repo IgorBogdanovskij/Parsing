@@ -8,7 +8,6 @@ import com.example.parsingfilm.IgorBogdanovskij.data.models.News
 class RepositoryImp(private val DateNews: DateNews):Repository {
 
     override fun getNews(): LiveData<MutableList<News>> {
-        //Log.d("my", "getNews: ${DateNews.listNews.size}")
         return this.DateNews.listNewsLiveData
     }
 }
