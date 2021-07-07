@@ -10,4 +10,7 @@ class RepositoryImp(private val DateNews: DateNews):Repository {
     override fun getNews(): LiveData<MutableList<News>> {
         return this.DateNews.listNewsLiveData
     }
+
+
+
 }
