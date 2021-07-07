@@ -23,6 +23,8 @@ class NewsFragment:Fragment(R.layout.view_news_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mNew = NewsFragmentArgs.fromBundle(requireArguments()).oneNews
+      // mNew = arguments?.getSerializable("new") as News
+
 
         mViewNewsFragment = ViewNewsFragment(context = view.context, view = view)
 
