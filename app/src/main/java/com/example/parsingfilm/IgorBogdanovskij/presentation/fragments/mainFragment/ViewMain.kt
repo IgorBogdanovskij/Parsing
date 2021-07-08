@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,28 +32,20 @@ class ViewMain(val activity: FragmentActivity, val view: View, val context: Cont
 
     interface CallBack {
         fun onClickAdapter(new:News)
-        fun onClickTabs()
-        fun onClickNews()
-        fun onClickWishes()
-        fun onClickShareWish()
+
     }
 
 
-
-    private var mToolbar: MaterialToolbar
-    private var mWishTextView:TextView
+    private val mToolbar: Toolbar = view.findViewById(R.id.toolbarNews)
     private var mRecyclerView:RecyclerView
     private var mAdapter:AdapterViewHolder
-    private lateinit var mIncludeWish:View
-    private lateinit var mBottomNavigationView: BottomNavigationView
+
 
 
         init {
-        mWishTextView = view.findViewById(R.id.wishTextView)
-        mToolbar = view.findViewById(R.id.toolbarPars)
+            activity?.findViewById<BottomNavigationView>(R.id.navigationBottom)?.visibility=View.VISIBLE
+
         mRecyclerView = view.findViewById(R.id.recyclerViewMain)
-        mBottomNavigationView = view.findViewById(R.id.navigation)
-        mIncludeWish = view.findViewById(R.id.includeWish)
 
 
         mAdapter = AdapterViewHolder(object :AdapterViewHolder.CallBack{
@@ -65,50 +58,12 @@ class ViewMain(val activity: FragmentActivity, val view: View, val context: Cont
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener{
-            if (it.itemId == R.id.news) {
-                mToolbar.menu.clear()
-                mRecyclerView.visibility = View.VISIBLE
-                mIncludeWish.visibility= View.GONE
-                mToolbar.title = "News"
-                callback.onClickNews()
-                return@setOnNavigationItemSelectedListener true
-            } else if (it.itemId == R.id.wishes) {
-                mToolbar.inflateMenu(R.menu.wish_menu)
-                mRecyclerView.visibility = View.GONE
-                mIncludeWish.visibility = View.VISIBLE
-                mToolbar.title = "Random Wish"
 
 
-                getDataWish()
-                callback.onClickWishes()
-                return@setOnNavigationItemSelectedListener true
-            }
-            return@setOnNavigationItemSelectedListener false
 
-        }
-
-            // TODO: 07/07/2021  
-        mToolbar.setOnMenuItemClickListener {
-            if (it.itemId == R.id.wishes){
-                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show()
-                return@setOnMenuItemClickListener true
-            }
-            return@setOnMenuItemClickListener false
-        }
     }
 
-    private fun getDataWish() {
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.getClient().create(ApiRetrofitWish::class.java)
-            val oneWish = response.getOneWish().await().quote.body
-
-            withContext(Dispatchers.Main){
-                mWishTextView.text = oneWish
-            }
-        }
-    }
 
 
     fun setDataNews(list:MutableList<News>){

@@ -14,6 +14,8 @@ import com.example.parsingfilm.IgorBogdanovskij.data.dataBase.retrofit.ApiRetrof
 import com.example.parsingfilm.IgorBogdanovskij.data.dataBase.retrofit.RetrofitClient
 import com.example.parsingfilm.IgorBogdanovskij.data.models.News
 import com.example.parsingfilm.R
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,28 +34,13 @@ class MainFragment(): Fragment(R.layout.fragment_main) {
 
 
             override fun onClickAdapter(new: News) {
-
+                activity?.findViewById<BottomNavigationView>(R.id.navigationBottom)?.visibility=View.GONE
                 val a = MainFragmentDirections.actionMainFragmentToViewNewsFragment(new)
                 findNavController().navigate(a)
             }
 
-            override fun onClickTabs() {
-            }
 
-            override fun onClickNews() {
-                Toast.makeText(context, "news", Toast.LENGTH_SHORT).show()
 
-            }
-
-            override fun onClickWishes() {
-                Toast.makeText(context, "wishes", Toast.LENGTH_SHORT).show()
-               // view.findNavController().navigate(R.id.action_mainFragment_to_wishFragment)
-            }
-
-            override fun onClickShareWish() {
-                // TODO: 07/07/2021
-
-            }
 
 
         })

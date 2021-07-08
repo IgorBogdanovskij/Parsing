@@ -1,16 +1,20 @@
 package com.example.parsingfilm.IgorBogdanovskij.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.parsingfilm.IgorBogdanovskij.data.dataBase.DateNews
+import com.example.parsingfilm.IgorBogdanovskij.data.dataBase.Date
 import com.example.parsingfilm.IgorBogdanovskij.data.models.News
+import com.example.parsingfilm.IgorBogdanovskij.data.models.Wish
+import retrofit2.Retrofit
 
-class RepositoryImp(private val DateNews: DateNews):Repository {
+class RepositoryImp(private val date: Date):Repository {
 
     override fun getNews(): LiveData<MutableList<News>> {
-        return this.DateNews.listNewsLiveData
+        return this.date.listNewsLiveData
     }
 
+    override fun getOneWish(): LiveData<Wish> {
+        return date.oneNews
+    }
 
 
 }
