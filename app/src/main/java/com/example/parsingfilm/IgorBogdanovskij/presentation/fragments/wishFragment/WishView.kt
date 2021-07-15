@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.parsingfilm.IgorBogdanovskij.data.models.Wish
 import com.example.parsingfilm.R
 
+
 class WishView(private val view:View, private val callback:Callback) {
 
     interface Callback{
@@ -21,13 +22,22 @@ class WishView(private val view:View, private val callback:Callback) {
 
 
 
+
         mToolbar.setOnMenuItemClickListener {
+
             if (it.itemId == R.id.shareItem){
                 callback.onShareClick(oneWish!!)
             }
             true
         }
     }
+
+
+    fun setWish(wish:Wish){
+        oneWish = wish
+        mTextView.text = wish.quote.body
+    }
+
 
 
 

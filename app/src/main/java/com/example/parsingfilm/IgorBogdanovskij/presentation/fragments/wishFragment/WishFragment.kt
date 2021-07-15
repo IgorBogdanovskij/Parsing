@@ -32,7 +32,8 @@ class WishFragment:Fragment(R.layout.wish_layout) {
             viewModel.getOneNew().observe(viewLifecycleOwner){
 
                 mWishView.mTextView.text= it.quote.body
-                mWishView.oneWish = it
+               // mWishView.oneWish = it
+                mWishView.setWish(it)
             }
     }
 
